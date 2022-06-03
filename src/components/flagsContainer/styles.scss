@@ -1,0 +1,17 @@
+.flags-container {
+  display: flex;
+  gap: 12px;
+  width: fit-content;
+
+  button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  img {
+    width: 48px;
+    height: 32px;
+    border-radius: 3px;
+  }
+}

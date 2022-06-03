@@ -1,5 +1,5 @@
 import { GoogleMap } from "@react-google-maps/api";
-import mapStyles from "../../mapStyles";
+import mapStyles from "../../styles/mapStyles";
 
 import "./styles.scss";
 

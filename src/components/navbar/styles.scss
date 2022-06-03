@@ -4,4 +4,26 @@
   box-shadow: 8px 0 9px -6px #888;
   z-index: 10;
   background-color: #f1f0ea;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px;
+
+  .nav-header {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  h2 {
+    font-weight: 500;
+    margin-bottom: 8px;
+    font-size: 1.125rem;
+  }
 }
