@@ -1,12 +1,20 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import FlagsContainer from "../flagsContainer";
 import VehicleCard from "../vehicleCard";
 
+import MenuItem from "@mui/material/MenuItem";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import CircularProgress from "@mui/material/CircularProgress";
+import data from "../../utils/frontend_data_gps.json";
 import "./styles.scss";
+import { UserContext } from "../../contexts/UserContext";
 
 const Navbar = () => {
-  const { t, i18n } = useTranslation();
+  const [routeStore, setRouteStore] = useState("");
+  const { loading, setLoading, setRoute } = useContext(UserContext);
+  const { i18n, t } = useTranslation();
+  const { courses } = data;
 
   const handleChangeLanguage = useCallback(
     (e: string) => {
@@ -15,14 +23,45 @@ const Navbar = () => {
     [i18n]
   );
 
+  const handleChangeSelect = (e: SelectChangeEvent) => {
+    setRouteStore(e.target.value);
+  };
+
+  const handleRouting = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setRoute(parseInt(routeStore.charAt(routeStore.length - 1)) - 1);
+  };
+
   return (
     <nav className="nav">
       <div className="nav-header">
-        <h1>{t("choose-route")}</h1>
-        <div>
-          <h2>{t("vehicle-info")}</h2>
-          <VehicleCard />
-        </div>
+        <form action="submit" onSubmit={handleRouting}>
+          <h1>{t("choose-route")}</h1>
+          <Select
+            value={routeStore}
+            onChange={handleChangeSelect}
+            disabled={loading}
+          >
+            {courses.map((e, i) => (
+              <MenuItem key={i} value={`Route ${i + 1}`}>
+                {t("route")}
+                {` ${i + 1}`}
+              </MenuItem>
+            ))}
+          </Select>
+          <div>
+            <h2>{t("vehicle-info")}</h2>
+            <VehicleCard />
+          </div>
+          <button type="submit" disabled={loading}>
+            {loading ? (
+              <CircularProgress color="secondary" size={20} />
+            ) : (
+              t("begin-route")
+            )}
+          </button>
+        </form>
       </div>
 
       <div>

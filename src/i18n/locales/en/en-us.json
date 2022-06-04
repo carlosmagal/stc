@@ -4,6 +4,8 @@
     "select-lang": "Select language",
     "plate": "Plate",
     "vehicle-info": "Vehicle information",
-    "color": "Color"
+    "color": "Color",
+    "route": "Route",
+    "begin-route": "Begin route"
   }
 }

@@ -4,6 +4,8 @@
     "select-lang": "Seleccione el idioma",
     "plate": "Placa",
     "vehicle-info": "Información del vehículo",
-    "color": "Color"
+    "color": "Color",
+    "route": "Ruta",
+    "begin-route": "Empezar ruta"
   }
 }

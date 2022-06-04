@@ -10,10 +10,26 @@
   justify-content: space-between;
   padding: 32px;
 
-  .nav-header {
+  .nav-header form {
     display: flex;
     flex-direction: column;
     gap: 16px;
+
+    button {
+      border: none;
+      font-size: 1rem;
+      padding: 16px 0;
+      border-radius: 4px;
+      background-color: #4b8673;
+      cursor: pointer;
+      margin-top: 64px;
+      color: white;
+      font-weight: 500;
+      height: 51px;
+      &:disabled {
+        opacity: 0.6;
+      }
+    }
   }
 
   h1 {
