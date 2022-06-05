@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { UserContext } from "../../contexts/UserContext";
 import FlagsContainer from "../flagsContainer";
 import VehicleCard from "../vehicleCard";
 
@@ -8,11 +9,10 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import CircularProgress from "@mui/material/CircularProgress";
 import data from "../../utils/frontend_data_gps.json";
 import "./styles.scss";
-import { UserContext } from "../../contexts/UserContext";
 
 const Navbar = () => {
   const [routeStore, setRouteStore] = useState("");
-  const { loading, setLoading, setRoute } = useContext(UserContext);
+  const { loading, setLoading, setRoute, setStop } = useContext(UserContext);
   const { i18n, t } = useTranslation();
   const { courses } = data;
 
@@ -30,6 +30,7 @@ const Navbar = () => {
   const handleRouting = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setStop(false);
     setRoute(parseInt(routeStore.charAt(routeStore.length - 1)) - 1);
   };
 
