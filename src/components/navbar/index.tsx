@@ -29,9 +29,11 @@ const Navbar = () => {
 
   const handleRouting = (e: React.FormEvent) => {
     e.preventDefault();
+    const newRoute = parseInt(routeStore.charAt(routeStore.length - 1)) - 1;
+    if (isNaN(newRoute)) return;
     setLoading(true);
     setStop(false);
-    setRoute(parseInt(routeStore.charAt(routeStore.length - 1)) - 1);
+    setRoute(newRoute);
   };
 
   return (
