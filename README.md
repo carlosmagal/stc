@@ -1,46 +1,51 @@
-# Getting Started with Create React App
+# Frontend 3D car
+O projeto consiste em uma aplicação com um menu e um mapa. No menu é possível escolher uma, entre cinco rotas, para ser exibida no mapa. Ao selecionar uma rota, a navegação referente a ela é iniciada no mapa. Ao finalizar uma rota é possível selecionar outras. Além disso, o usuário tem a opção de escolher entre três idiomas, português, inglês e espanhol, para utilizar no site.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Estrutura do projeto
+A pasta "src" está estruturada da seguinte maneira
+- **assets**
+	- Contém as imagens e ícones utilizados no desenvolvimento.
+- **components**
+	- Contém os componentes utilizados para compor as páginas.
+- **contexts**
+	- Nessa pasta fica o "UserContext", contexto responsável por fazer o controle dos estados na aplicação.
+- **i18n**
+	- Contém a configuração referente a internacionalização do projeto, em três idiomas diferentes: português, inglês e espanhol.
+- **styles**
+	- Contém arquivos referentes a estilização de componentes.
+- **utils**
+	- Contém os dados que foram consumidos na aplicação e funções utilizadas para o desenvolvimento.
 
-In the project directory, you can run:
+## Tecnologias utilizadas
 
-### `yarn start`
+- **SCSS**
+	- Pré-processador de CSS que adiciona algumas funcionalidades na estilização, seu uso foi solicitado para o desenvolvimento.
+- **Typescript**
+	- Typescript é uma linguagem de programação que adiciona ao javascript a tipagem estática. Optar por utilizá-la no lugar do JS é interessante, pois a tipagem traz vantagens em relação a produtividade e prevenção de erros, por exemplo.
+- **MaterialUI**
+	- MaterialUI é uma biblioteca de componentes para React. Foi utilizada, pois tem uma lista grande de componentes e é amplamente aceita na comunidade de desenvolvimento.
+- **i18next**
+	- i18next é um framework de internacionalização para javascript. Ao pesquisar sobre frameworks para internacionalização, vi que o i18next tinha muitos usuários por ter um bom desempenho e fácil configuração .
+- **Google Maps**
+	- O Google Maps é um serviço oferecido pela Google para visualização de mapas. Optei por utilizá-la, pois oferece já havia utilizado em um projeto passado e por ela oferecer uma gama grande de funcionalidades.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Como executar o projeto
+Para utilizar o Google Maps é necessário gerar uma chave de api no google cloud, pois trata-se de um serviço pago. Por essa chave ser um dado sensível, ela foi armazenada como variável de ambiente e não estará presente no repositório (mandarei a chave utilizada no desenvolvimento por e-mail). Logo para utilizar o mapa há duas opções:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- Criar, na pasta raiz do projeto, um arquivo **.env** e declarar a variável **REACT_APP_GOOGLE_API_KEY**, cujo valor será a chave de api, da seguinte maneira (o arquivo deverá conter apenas esta linha): 
+	> REACT_APP_GOOGLE_API_KEY="SUA CHAVE DE API"
 
-### `yarn test`
+- Ir no arquivo **src/components/mapWrapper/index.tsx** e fazer o seguinte:
+	> Comentar a linha 7 (colocar um // em seu início), descomentar a linha 9 e colocar a chave de api entre as aspas.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Escolhida uma opção, deve-se baixar, caso não tenha, o [NodeJS](https://nodejs.org/en/) . Com o Node instalado, deve-se executar no terminal o comando:
+>`npm install --global yarn`
 
-### `yarn build`
+Esse comando instalará o *yarn*, um gerenciador de pacotes. Após isso, deve-se executar o comando:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+> `yarn install`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Esse comando vai instalar os pacotes utilizados no projeto. Para rodar o projeto, deve executar o comando:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+>`yarn start`
