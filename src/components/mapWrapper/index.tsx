@@ -5,7 +5,7 @@ const MapWrapper = () => {
   const { isLoaded, loadError } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY ?? "",
-    //se nao tiver o .env, descomente a linha abaixo, comente a linha acima e cole a chave de api
+    //se nao quiser utilizar o .env, descomente a linha abaixo, comente a linha acima e cole a chave de api entre aspas
     // googleMapsApiKey: "",
   });
 
