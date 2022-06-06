@@ -5,8 +5,8 @@ import { UserContext } from "../../contexts/UserContext";
 import mapStyles from "../../styles/mapStyles";
 
 import data from "../../utils/frontend_data_gps.json";
+// import { getPolylineValues } from "../../utils/getPolylineValues";
 import { path } from "../../utils/iconPath";
-// import car from '../../assets/icons/car.svg'
 import "./styles.scss";
 
 interface Position {
@@ -41,6 +41,8 @@ const Map = () => {
   const { route, stop, setRoute, setLoading, setStop } =
     useContext(UserContext);
   const { courses } = data;
+  // const polylinePath = getPolylineValues(route);
+  const [rotation, setRotation] = useState(0);
   const [googleMap, setGoogleMap] = useState<google.maps.Map>();
   const [currentPosIndex, setCurrentPosIndex] = useState(0);
   const [currentCourse, setCurrentCourse] = useState<Course[]>([initialCourse]);
@@ -49,7 +51,7 @@ const Map = () => {
   const animation = useSpring({
     val: 0,
     from: { val: 1 },
-    config: { duration: 3000 },
+    config: { duration: 1500 },
     onChange: () => {
       const value = animation.val.get();
       if (currentPosIndex > 0) {
@@ -74,10 +76,22 @@ const Map = () => {
     setLoading(false);
     setRoute(-1);
     setCurrentPosIndex(0);
-    // setCurrentPosition(initialPosition);
     setCurrentCourse([initialCourse]);
   }, [setLoading, setRoute]);
 
+  const getRotation = (
+    cPos: { latitude: number; longitude: number },
+    nPos: { latitude: number; longitude: number }
+  ) => {
+    if (!cPos || !nPos) {
+      return 0;
+    }
+    const latDiff = cPos.latitude - nPos.latitude;
+    const lngDiff = cPos.longitude - nPos.longitude;
+    return (Math.atan2(lngDiff, latDiff) * 180.0) / Math.PI;
+  };
+
+  //muda a posicao e chama a animacao
   const doUpdate = useCallback(() => {
     const newCurPos = currentPosIndex + 1;
     if (newCurPos >= currentCourse.length) {
@@ -86,10 +100,11 @@ const Map = () => {
         return;
       }
       resetValues();
-      console.log("-------------------");
       return;
     }
-    console.log("nao deu return");
+    setRotation(
+      getRotation(currentCourse[currentPosIndex], currentCourse[newCurPos])
+    );
     setCurrentPosIndex(newCurPos);
     animation.val.reset();
     animation.val.start();
@@ -106,9 +121,43 @@ const Map = () => {
     if (route !== -1) {
       setCurrentCourse(courses[route].gps);
       start();
+      // animateCircle(line);
     }
   }, [courses, route, googleMap, start, stop]);
 
+  // const lineSymbol = {
+  //   path: google.maps.SymbolPath.CIRCLE,
+  //   scale: 8,
+  //   strokeColor: "#393",
+  // };
+  // const line = new google.maps.Polyline({
+  //   path: polylinePath,
+  //   icons: [
+  //     {
+  //       icon: lineSymbol,
+  //       offset: "99%",
+  //     },
+  //   ],
+  //   map: googleMap,
+  // });
+
+  // function animateCircle(line: google.maps.Polyline) {
+  //   let count = 0;
+
+  //   const interval = window.setInterval(() => {
+  //     count = (count + 1) % 200;
+
+  //     const icons = line.get("icons");
+  //     icons[0].offset = count / 2 + "%";
+
+  //     if (icons[0].offset === "100%") {
+  //       line.setMap(null);
+  //       console.log('first')
+  //       clearInterval(interval);
+  //     }
+  //     line.set("icons", icons);
+  //   }, 100);
+  // }
   return (
     <div className="map">
       <GoogleMap
@@ -127,6 +176,9 @@ const Map = () => {
           fullscreenControl: false,
         }}
       >
+        {/* {route !== -1 && (
+          <Polyline path={polylinePath} options={{ strokeColor: "#4B8673" }} />
+        )} */}
         {googleMap && (
           <Marker
             position={currentPosition}
@@ -135,6 +187,7 @@ const Map = () => {
               fillColor: "#000000",
               fillOpacity: 1,
               scale: 0.6,
+              rotation: rotation,
               anchor: new google.maps.Point(22, 43),
             }}
             options={{ map: googleMap }}

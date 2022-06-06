@@ -27,7 +27,7 @@ export const UserContext = createContext<UserContextValues>(initialValue);
 export const UserContextProvider = ({ children }: UserContextProps) => {
   const [loading, setLoading] = useState(initialValue.loading);
   const [route, setRoute] = useState(initialValue.route);
-  const [stop, setStop] = useState(false);
+  const [stop, setStop] = useState(initialValue.stop);
 
   return (
     <UserContext.Provider
